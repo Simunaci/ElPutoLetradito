@@ -1,8 +1,9 @@
 START
 
-largo, ancho,contador, i, j
-ancho=rand(4)+8
-largo=rand(4)+8
+DECLARAR VARIABLES
+
+ancho=rand(3)+8
+largo=rand(3)+8
 matriz [ancho,largo]
 
 generar vector_p
@@ -13,14 +14,14 @@ cantidad_p=largo*ancho/4
 cantidad_vocal=largo*ancho/4
 cantidad_cons=largo*ancho/2 ### Ayuda para redondear de forma que la suma sea igual a largo*ancho pero todos sean enteros
 
-desde i=1 hasta anchi{
+desde i=1 hasta ancho{
 	desde j=1 hasta largo{
 		llamar cargado(i,j)
 	}
 }
 
 
-desde i=1 hasta anchi{
+desde i=1 hasta ancho{
 	desde j=1 hasta largo{
 		si matriz[i,j]==(p or p){
 			llamar buscador(i,j)
@@ -37,7 +38,7 @@ END
 ### hallan sido llenadas 
 ### (puede ser mejorada, buscar manera de que no llame vectores cuyos valores hayan sido utilizados en su totalidad)
 funcion cargado{		
-		generador=rand(4)+1
+		generador=rand(3)+1
 		si (generador==1){
 				  si (cantidad_p<>0){
 						     matriz[i,j]=vector_p[cantidad_p]
@@ -177,3 +178,4 @@ funcion buscador{
 		}
 		
 }
+END
