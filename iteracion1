@@ -6,13 +6,13 @@ ancho=rand(3)+8
 largo=rand(3)+8
 matriz [ancho,largo]
 
-generar vector_p
-generar vector_vocales
-generar vector_consonantes ### Ayuda para forma de generar vectores con vocales y consonantes al azar
 
+generar vector_vocales 	### Ayuda para forma de generar vectores con vocales y consonantes al azar
+ 
+ 
 cantidad_p=largo*ancho/4
-cantidad_vocal=largo*ancho/4
-cantidad_cons=largo*ancho/2 ### Ayuda para redondear de forma que la suma sea igual a largo*ancho pero todos sean enteros
+cantidad_vocal=largo*ancho/2
+cantidad_cons=largo*ancho/4 ### Ayuda para redondear de forma que la suma sea igual a largo*ancho pero todos sean enteros
 
 desde i=1 hasta ancho{
 	desde j=1 hasta largo{
@@ -54,33 +54,38 @@ END
 ### hallan sido llenadas 
 ### (puede ser mejorada, buscar manera de que no llame vectores cuyos valores hayan sido utilizados en su totalidad)
 funcion cargado{		
-		generador=rand(3)+1
-		si (generador==1){
+		salir = NO
+		generador=rand(27)+97
+		si (generador==112){
 				  si (cantidad_p<>0){
-						     matriz[i,j]=vector_p[cantidad_p]
-						     cantidad_p=cantidad_p-1
+						matriz[i,j]=ascii(generador) ##Simu: no recuerdo como en especifio es la funcion pero se entiende
+						cantidad_p=cantidad_p-1
+						salir = SI
 				  sino {
-					      llamar generador
-					      }
+						llamar generador
+					}
 				  }
 		}
-		si (generador==2 ){
-				  si (cantidad_vocal<>0){
-						     matriz[i,j]=vector_vocal[cantidad_vocal]
-						     cantidad_vocal=cantidad_vocal-1
+		desde (i = 1; i <= strlen(vector_vocales); i++){
+			si (ascii(generador) == vector_vocales[i]) {
+				si (cantidad_vocal<>0){
+						matriz[i,j]=vector_vocales[i]
+						cantidad_vocal=cantidad_vocal-1
+						salir = SI
 				  sino {
-					     llamar generador
-					     }
+						llamar generador
 					}
+				}
+			}
 		}
-		si ((generador==3 or generador==4)){
-				  si (cantidad_cons<>0){
-						     matriz[i,j]=vector_cons[cantidad_cons]
-						     cantidad_cons=cantidad_cons-1
-				  sino {
-					      llamar generador
-					      }
+		si (!salir){
+				si (cantidad_cons<>0){
+						matriz[i,j]=ascii(generador)
+						cantidad_cons=cantidad_cons-1
+				sino {
+						llamar generador
 					}
+				}
 		}
 
 }
