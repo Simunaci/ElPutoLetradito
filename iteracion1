@@ -1,0 +1,75 @@
+START
+
+largo, ancho,contador, i, j
+ancho=rand(4)+8
+largo=rand(4)+8
+matriz [largo,ancho]
+
+generar vector_p
+generar vector_vocales
+generar vector_consonantes #Ayuda para forma de generar vectores con vocales y consonantes al azar
+
+cantidad_p=largo*ancho/4
+cantidad_vocal=largo*ancho/4
+cantidad_cons=largo*ancho/2 # Ayuda para redondear de forma que la suma sea igual a largo*ancho pero todos sean enteros
+
+desde i=1 hasta largo{
+	desde j=1 hasta ancho{
+		llamar cargado(i,j)
+	}
+}
+
+
+desde i=1 hasta largo{
+	desde j=1 hasta ancho{
+		si matriz[i,j]==(p or p){
+			llamar buscador(i,j)
+    }
+  }
+}
+
+### La funcion cargado hace lo siguiente: teniendo 3 vectores cargados con consonantes, vocales y Ps en sus cantidades respectivas
+### la funcion va a cargar cada casilla de la matriz con un valor de estos vectores al azar, siempre y cuando no se hayan ya
+### utilizado todos los valores del vector, en caso de ser asi, vuelve a llamarse a si misma hasta que todas las casillas 
+### hallan sido llenadas 
+### (puede ser mejorada, buscar manera de que no llame vectores cuyos valores hayan sido utilizados en su totalidad)
+funcion cargado{		
+		generador=rand(4)+1
+		si (generador==1){
+				  si (cantidad_p<>0){
+						     matriz[i,j]=vector_p[cantidad_p]
+						     cantidad_p=cantidad_p-1
+				  sino {
+					      llamar generador
+					      }
+				  }
+		}
+		si (generador==2 ){
+				  si (cantidad_vocal<>0){
+						     matriz[i,j]=vector_vocal[cantidad_vocal]
+						     cantidad_vocal=cantidad_vocal-1
+				  sino {
+					     llamar generador
+					     }
+					}
+		}
+		si ((generador==3 or generador==4)){
+				  si (cantidad_cons<>0){
+						     matriz[i,j]=vector_cons[cantidad_cons]
+						     cantidad_cons=cantidad_cons-1
+				  sino {
+					      llamar generador
+					      }
+					}
+		}
+
+}
+
+### La funcion buscador va a hacer lo siguiente: empieza buscando todas las casillas alrededor de la P si con alguna puede continuar se llama de nuevo a si misma
+### continuando desde la letra siguiente, en caso de ocurrir esto, convierte la casilla anterior a 0 pero guarda su posicion y valor. Repetira este proceso hasta
+### que encuentre alguna palabra de 4 letras. En caso de no poder completarse esto, convierte las casillas pasadas a 0 a su valor anterior.
+### Finalmente imprime la palabra en caso de que esta tenga 4 letras.
+
+funcion buscador{
+
+}
