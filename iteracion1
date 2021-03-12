@@ -3,30 +3,33 @@ START
 largo, ancho,contador, i, j
 ancho=rand(4)+8
 largo=rand(4)+8
-matriz [largo,ancho]
+matriz [ancho,largo]
 
 generar vector_p
 generar vector_vocales
-generar vector_consonantes #Ayuda para forma de generar vectores con vocales y consonantes al azar
+generar vector_consonantes ### Ayuda para forma de generar vectores con vocales y consonantes al azar
 
 cantidad_p=largo*ancho/4
 cantidad_vocal=largo*ancho/4
-cantidad_cons=largo*ancho/2 # Ayuda para redondear de forma que la suma sea igual a largo*ancho pero todos sean enteros
+cantidad_cons=largo*ancho/2 ### Ayuda para redondear de forma que la suma sea igual a largo*ancho pero todos sean enteros
 
-desde i=1 hasta largo{
-	desde j=1 hasta ancho{
+desde i=1 hasta anchi{
+	desde j=1 hasta largo{
 		llamar cargado(i,j)
 	}
 }
 
 
-desde i=1 hasta largo{
-	desde j=1 hasta ancho{
+desde i=1 hasta anchi{
+	desde j=1 hasta largo{
 		si matriz[i,j]==(p or p){
 			llamar buscador(i,j)
     }
   }
 }
+
+END
+
 
 ### La funcion cargado hace lo siguiente: teniendo 3 vectores cargados con consonantes, vocales y Ps en sus cantidades respectivas
 ### la funcion va a cargar cada casilla de la matriz con un valor de estos vectores al azar, siempre y cuando no se hayan ya
@@ -71,5 +74,106 @@ funcion cargado{
 ### Finalmente imprime la palabra en caso de que esta tenga 4 letras.
 
 funcion buscador{
+		si (contador==3){
+		imprimir(p1,p2,p3,p4)
+		ender=1
+		}
+		si (i<>1 and j<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i-1),(j-1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i-1),(j-1)]
+			safe_posicion[contador,1]=(i-1)
+			safe_posicion[contador,2]=(j-1)
+			matriz[(i-1),(j-1)]=0
+			llamar buscador ((i-1)(j-1))
+			}
+		}
+		
+		si (j<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i),(j-1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i),(j-1)]
+			safe_posicion[contador,1]=(i)
+			safe_posicion[contador,2]=(j-1)
+			matriz[(i),(j-1)]=0
+			llamar buscador ((i)(j-1))
+		}
 
+		si (i<>ancho and j<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i+1),(j-1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i+1),(j-1)]
+			safe_posicion[contador,1]=(i+1)
+			safe_posicion[contador,2]=(j-1)
+			matriz[(i+1),(j-1)]=0
+			llamar buscador ((i+1)(j-1))
+		}
+		
+		si (i<>ancho and ender<>1){
+			vector_palabra[contador]=matriz[(i+1),(j)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i+1),(j)]
+			safe_posicion[contador,1]=(i+1)
+			safe_posicion[contador,2]=(j1)
+			matriz[(i+1),(j)]=0
+			llamar buscador ((i+1)(j))
+		}
+
+		si (i<>ancho and j<>largo and ender<>1){
+			vector_palabra[contador]=matriz[(i+1),(j+1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i+1),(j+1)]
+			safe_posicion[contador,1]=(i+1)
+			safe_posicion[contador,2]=(j+1)
+			matriz[(i+1),(j+1)]=0
+			llamar buscador ((i+1)(j+1))
+		}
+		
+		si (j<>largo and ender<>1){
+			vector_palabra[contador]=matriz[(i),(j+1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i),(j+1)]
+			safe_posicion[contador,1]=(i)
+			safe_posicion[contador,2]=(j+1)
+			matriz[(i),(j+1)]=0
+			llamar buscador ((i)(j+1))
+		}
+		
+		si (i<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i-1),(j)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i-1),(j)]
+			safe_posicion[contador,1]=(i-1)
+			safe_posicion[contador,2]=(j)
+			matriz[(i-1),(j)]=0
+			llamar buscador ((i-1)(j))
+		}
+
+		si (i<>1 and j<>largo and ender<>1){
+			vector_palabra[contador]=matriz[(i-1),(j+1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i-1),(j+1)]
+			safe_posicion[contador,1]=(i-1)
+			safe_posicion[contador,2]=(j+1)
+			matriz[(i-1),(j+1)]=0
+			llamar buscador ((i-1)(j+1))
+			
+		sino{ ### Esta parte de la funcion devuelve los valores puestos en cero a sus valores originales si es que no se forma una palabra de 4 letras
+			si(contador==1){
+			matriz[safe_posicion[1,1],safe_posicion[1,2]=safe_letra[1]]
+			}
+			si(contador==2){
+			matriz[safe_posicion[2,1],safe_posicion[2,2]=safe_letra[2]]
+			}
+		}
+		}
+		
 }
