@@ -1,0 +1,181 @@
+START
+
+DECLARAR VARIABLES
+
+ancho=rand(3)+8
+largo=rand(3)+8
+matriz [ancho,largo]
+
+generar vector_p
+generar vector_vocales
+generar vector_consonantes ### Ayuda para forma de generar vectores con vocales y consonantes al azar
+
+cantidad_p=largo*ancho/4
+cantidad_vocal=largo*ancho/4
+cantidad_cons=largo*ancho/2 ### Ayuda para redondear de forma que la suma sea igual a largo*ancho pero todos sean enteros
+
+desde i=1 hasta ancho{
+	desde j=1 hasta largo{
+		llamar cargado(i,j)
+	}
+}
+
+
+desde i=1 hasta ancho{
+	desde j=1 hasta largo{
+		si matriz[i,j]==(p or p){
+			llamar buscador(i,j)
+    }
+  }
+}
+
+END
+
+
+### La funcion cargado hace lo siguiente: teniendo 3 vectores cargados con consonantes, vocales y Ps en sus cantidades respectivas
+### la funcion va a cargar cada casilla de la matriz con un valor de estos vectores al azar, siempre y cuando no se hayan ya
+### utilizado todos los valores del vector, en caso de ser asi, vuelve a llamarse a si misma hasta que todas las casillas 
+### hallan sido llenadas 
+### (puede ser mejorada, buscar manera de que no llame vectores cuyos valores hayan sido utilizados en su totalidad)
+funcion cargado{		
+		generador=rand(3)+1
+		si (generador==1){
+				  si (cantidad_p<>0){
+						     matriz[i,j]=vector_p[cantidad_p]
+						     cantidad_p=cantidad_p-1
+				  sino {
+					      llamar generador
+					      }
+				  }
+		}
+		si (generador==2 ){
+				  si (cantidad_vocal<>0){
+						     matriz[i,j]=vector_vocal[cantidad_vocal]
+						     cantidad_vocal=cantidad_vocal-1
+				  sino {
+					     llamar generador
+					     }
+					}
+		}
+		si ((generador==3 or generador==4)){
+				  si (cantidad_cons<>0){
+						     matriz[i,j]=vector_cons[cantidad_cons]
+						     cantidad_cons=cantidad_cons-1
+				  sino {
+					      llamar generador
+					      }
+					}
+		}
+
+}
+
+### La funcion buscador va a hacer lo siguiente: empieza buscando todas las casillas alrededor de la P si con alguna puede continuar se llama de nuevo a si misma
+### continuando desde la letra siguiente, en caso de ocurrir esto, convierte la casilla anterior a 0 pero guarda su posicion y valor. Repetira este proceso hasta
+### que encuentre alguna palabra de 4 letras. En caso de no poder completarse esto, convierte las casillas pasadas a 0 a su valor anterior.
+### Finalmente imprime la palabra en caso de que esta tenga 4 letras.
+
+funcion buscador{
+		si (contador==3){
+		imprimir(p1,p2,p3,p4)
+		ender=1
+		}
+		si (i<>1 and j<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i-1),(j-1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i-1),(j-1)]
+			safe_posicion[contador,1]=(i-1)
+			safe_posicion[contador,2]=(j-1)
+			matriz[(i-1),(j-1)]=0
+			llamar buscador ((i-1)(j-1))
+			}
+		}
+		
+		si (j<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i),(j-1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i),(j-1)]
+			safe_posicion[contador,1]=(i)
+			safe_posicion[contador,2]=(j-1)
+			matriz[(i),(j-1)]=0
+			llamar buscador ((i)(j-1))
+		}
+
+		si (i<>ancho and j<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i+1),(j-1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i+1),(j-1)]
+			safe_posicion[contador,1]=(i+1)
+			safe_posicion[contador,2]=(j-1)
+			matriz[(i+1),(j-1)]=0
+			llamar buscador ((i+1)(j-1))
+		}
+		
+		si (i<>ancho and ender<>1){
+			vector_palabra[contador]=matriz[(i+1),(j)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i+1),(j)]
+			safe_posicion[contador,1]=(i+1)
+			safe_posicion[contador,2]=(j1)
+			matriz[(i+1),(j)]=0
+			llamar buscador ((i+1)(j))
+		}
+
+		si (i<>ancho and j<>largo and ender<>1){
+			vector_palabra[contador]=matriz[(i+1),(j+1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i+1),(j+1)]
+			safe_posicion[contador,1]=(i+1)
+			safe_posicion[contador,2]=(j+1)
+			matriz[(i+1),(j+1)]=0
+			llamar buscador ((i+1)(j+1))
+		}
+		
+		si (j<>largo and ender<>1){
+			vector_palabra[contador]=matriz[(i),(j+1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i),(j+1)]
+			safe_posicion[contador,1]=(i)
+			safe_posicion[contador,2]=(j+1)
+			matriz[(i),(j+1)]=0
+			llamar buscador ((i)(j+1))
+		}
+		
+		si (i<>1 and ender<>1){
+			vector_palabra[contador]=matriz[(i-1),(j)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i-1),(j)]
+			safe_posicion[contador,1]=(i-1)
+			safe_posicion[contador,2]=(j)
+			matriz[(i-1),(j)]=0
+			llamar buscador ((i-1)(j))
+		}
+
+		si (i<>1 and j<>largo and ender<>1){
+			vector_palabra[contador]=matriz[(i-1),(j+1)]
+			si (vector_palabra existe en lista de palabras){ ### Ayuda, metodo para verificar si existe la palabra en la lista CULTURA
+			contador=contador+1
+			safe_letra[contador]=matriz[(i-1),(j+1)]
+			safe_posicion[contador,1]=(i-1)
+			safe_posicion[contador,2]=(j+1)
+			matriz[(i-1),(j+1)]=0
+			llamar buscador ((i-1)(j+1))
+			
+		sino{ ### Esta parte de la funcion devuelve los valores puestos en cero a sus valores originales si es que no se forma una palabra de 4 letras
+			si(contador==1){
+			matriz[safe_posicion[1,1],safe_posicion[1,2]=safe_letra[1]]
+			}
+			si(contador==2){
+			matriz[safe_posicion[2,1],safe_posicion[2,2]=safe_letra[2]]
+			}
+		}
+		}
+		
+}
+END
