@@ -20,17 +20,33 @@ desde i=1 hasta ancho{
 	}
 }
 
-
-desde i=1 hasta ancho{
-	desde j=1 hasta largo{
-		si matriz[i,j]==(p or p){
-			llamar buscador(i,j)
-    }
-  }
+mientras (1<>0)
+imprimir ("Desea simular otro día en la vida de letradito? S/N")
+leer answer
+si (answer=S){
+	desde i=1 hasta ancho{
+		desde j=1 hasta largo{
+			si matriz[i,j]==(p or p){
+				llamar buscador(i,j)
+    			}
+  		}
+	} 
 }
 
-END
+si (ender == 0){
+	imprimir "Letradito ha tenido una muerte lente a causa de inancion, ya no habian palabras que pudiese comer."
+	END
+}
+desde i=1 hasta ancho{
+	desde j=1 hasta largo{
+		imprimir (i,j)
+	}
+	imprimir"/s"
+}
 
+si (answer == N){
+END
+}
 
 ### La funcion cargado hace lo siguiente: teniendo 3 vectores cargados con consonantes, vocales y Ps en sus cantidades respectivas
 ### la funcion va a cargar cada casilla de la matriz con un valor de estos vectores al azar, siempre y cuando no se hayan ya
